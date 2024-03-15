@@ -1,0 +1,13 @@
+#inputSearch {
+  margin-top: 50px;
+  border-radius: 25px;
+  color: #EDF2E4;
+  background-color: #1A202C;
+  width: 350px;
+}
+
+.containerInputSearch {
+  margin-top: 10px;
+  display: flex;
+  justify-content: center;
+}

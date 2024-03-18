@@ -2,8 +2,16 @@ import "./App.css"
 import { Tabs, TabList, Tab} from '@chakra-ui/react'
 import InputSearch from "./components/InputSearch/InputSearch"
 import ModalDataInput from "./components/ModalDataInput/ModalDataInput"
+import { useState } from "react"
 
 function App() {
+  const [showModal, setShowModal] = useState(false)
+  const [searchAPI, setSearchAPI] = useState("")
+
+  const openModal = () => {
+    setShowModal(true)
+  }
+
   return (
     <>
       <div className="container">
@@ -13,12 +21,7 @@ function App() {
             <Tab>News</Tab>
             <Tab>Top 10 artist</Tab>
           </TabList>
-
-          {/*<TabPanels>
-            <TabPanel>
-            <p>one!</p>
-            </TabPanel>
-          </TabPanels>*/}
+        
         </Tabs>
         <hr />
       </div>
@@ -31,9 +34,12 @@ function App() {
           as you listen
         </h1>
       </article>
-      <InputSearch />
 
-      <ModalDataInput />
+      <InputSearch openModal={openModal} setSearchAPI={setSearchAPI}/>
+      {
+        showModal && 
+          <ModalDataInput showModal={setShowModal}/>
+      }
     </>
   )
 }

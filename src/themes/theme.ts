@@ -6,6 +6,7 @@ const theme = extendTheme({
       body: {
         backgroundColor: '#1A202C',
         fontFamily: 'Arial',
+        color: 'white'
       },
     },
   },

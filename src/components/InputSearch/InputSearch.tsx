@@ -12,6 +12,7 @@ function InputSearch({openModal, setSearchAPI}: OpenModal) {
 
   const handleKeyDown = (event: { key: string }) => {
     if(event.key === "Enter") {
+      setSearchAPI(search)
       openModal()
     }
   }
@@ -21,7 +22,7 @@ return(
     <div className='containerInputSearch'>
       <Input 
         id='inputSearch' 
-        placeholder='🔎 Type Artist/Band...' 
+        placeholder='🔎 Type Band...' 
         size='lg'
         onChange={(e) => setSearch(e.target.value)} 
         onKeyDown={handleKeyDown}

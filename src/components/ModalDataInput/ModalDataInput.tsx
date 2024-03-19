@@ -3,19 +3,18 @@ import {
   ModalOverlay,
   ModalContent,
   ModalHeader,
-  ModalFooter,
   ModalBody,
   ModalCloseButton,
-  Button,
   useDisclosure,
 } from '@chakra-ui/react'
 import { useEffect } from 'react';
 
 interface closeModalProp {
   showModal: (value: boolean) => void
+  bandData: {}
 }
 
-function ModalDataInput({showModal}: closeModalProp) {
+function ModalDataInput({showModal, bandData}: closeModalProp) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -29,7 +28,6 @@ function ModalDataInput({showModal}: closeModalProp) {
 
   return(
     <>
-      <p>{"mellegaesto: " + isOpen}</p>
       <Modal isCentered isOpen={isOpen} onClose={closeModal} size={'xl'}>
         <ModalOverlay
           bg='backdropSaturate'
@@ -42,13 +40,16 @@ function ModalDataInput({showModal}: closeModalProp) {
             Modal Title
           </ModalHeader>
           <hr style={{borderWidth: '1px'}}/>
-          <ModalCloseButton />
+          <ModalCloseButton style={{color: "red"}}/>
           <ModalBody style={{ marginTop: '3%'}}>
             <p style={{color: 'white'}}>Custom backdrop filters!</p>
           </ModalBody>
-          <ModalFooter>
+          {/*<ModalFooter>
             <Button onClick={closeModal} style={{backgroundColor: '#bee3f8'}}>Close</Button>
-          </ModalFooter>
+  </ModalFooter>*/}
+
+        {/*<CardDataInput bandData={bandData}/>  */}
+
         </ModalContent>
       </Modal>
     </>

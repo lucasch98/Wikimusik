@@ -10,8 +10,9 @@ interface OpenModal {
 function InputSearch({openModal, setSearchAPI}: OpenModal) {
   const [search, setSearch] = useState("")
 
-  const handleKeyDown = (event: { key: string }) => {
-    if(event.key === "Enter") {
+  const handleKeyDown = (event: { key: string; preventDefault: () => void; }) => {
+    if(event.key === 'Enter') {
+      event.preventDefault()
       setSearchAPI(search)
       openModal()
     }

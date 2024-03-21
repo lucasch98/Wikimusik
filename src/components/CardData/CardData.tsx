@@ -1,23 +1,19 @@
 import { useEffect } from "react"
-import { constants_API } from "../../constants_API/constants_API"
+import { getDataAboutArtist } from "../../constants_API/constants_API"
 
-//const 
-interface searchBandInput {
-  searchAPI: string
-  isLoading: boolean
-  setLoading: (value: boolean) => void
-  dataAPI: {}
+interface props {
+  searchAPI: string,
+  isLoading: boolean,
+  setLoading: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-
-function CardData ({searchAPI, isLoading, setLoading, dataAPI}: searchBandInput) {
+function CardData ({searchAPI, isLoading, setLoading} : props) {
   
   useEffect(() => {
-    const fetchDataAPI = async () => {
-      const response = await fetch()
-    }
+    const responseAPI = getDataAboutArtist(searchAPI)
+    console.log("respuesta API: " + responseAPI)
+    console.log(isLoading, setLoading)
   },[])
-
   return(
     <>
     </>

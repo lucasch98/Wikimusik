@@ -9,20 +9,14 @@ import CardData from "./components/CardData/CardData"
 function App() {
   const [showModal, setShowModal] = useState(false)
   const [searchAPI, setSearchAPI] = useState("")
-  const [dataAPI, setDataAPI] = useState({})
   const [isLoading, setLoading] = useState(true)
 
   const openModal = () => {
     if(searchAPI !== "") {
-      <CardData 
-        searchAPI={searchAPI} 
-        isLoading={isLoading} 
-        setLoading={setLoading} 
-        dataAPI={dataAPI}
-      />
+      console.log("ntre")
+      setShowModal(true)
     }
 
-    setShowModal(true)
   }
 
   return (
@@ -40,14 +34,12 @@ function App() {
       </div>
 
       <div style={{paddingTop: "3%"}}>
-        <section style={{ 
-          display: 'flex', 
-          justifyContent: 'center', 
-          alignContent: 'center', 
+        <section style={{  
           fontWeight: 600, 
           lineHeight: 1.1, 
           opacity: 0.9, 
-          fontSize: "15%"
+          fontSize: "15%",
+          height: "50vh"
         }}>
           <h1> 
             Discover information about your <br /> favorite 
@@ -58,8 +50,12 @@ function App() {
         </section>
       <InputSearch openModal={openModal} setSearchAPI={setSearchAPI}/>
       {
-        showModal && 
-        <ModalDataInput showModal={setShowModal} bandData={searchAPI}/>
+        showModal && (
+          <>
+            <CardData searchAPI={searchAPI} isLoading={isLoading} setLoading={setLoading}/>
+            <ModalDataInput showModal={setShowModal} bandData={searchAPI}/>
+          </>
+        )
       }
       </div>
 

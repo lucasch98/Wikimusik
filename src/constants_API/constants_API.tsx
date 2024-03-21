@@ -9,7 +9,7 @@ const API_KEY = '591cfdab34dc890c5bdd539660d20060'
 const getTopTracksURL = async ({artist}: paramsAPI) => {
   try{
     const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${artist}&api_key=${API_KEY}&format=json`)
-    
+
       if(!response.ok) {
         throw new Error('No data')
       }

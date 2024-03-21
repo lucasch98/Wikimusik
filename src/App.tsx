@@ -40,7 +40,15 @@ function App() {
       </div>
 
       <div style={{paddingTop: "3%"}}>
-        <section style={{ display: 'flex', justifyContent: 'center', alignContent: 'center', fontWeight: 900, lineHeight: 1.2}}>
+        <section style={{ 
+          display: 'flex', 
+          justifyContent: 'center', 
+          alignContent: 'center', 
+          fontWeight: 600, 
+          lineHeight: 1.1, 
+          opacity: 0.9, 
+          fontSize: "15%"
+        }}>
           <h1> 
             Discover information about your <br /> favorite 
             <span style={{color: '#90CDF4'}}> artists </span> 

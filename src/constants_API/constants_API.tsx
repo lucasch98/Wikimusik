@@ -53,18 +53,16 @@ const getTopArtistsByCountry = async ({country}: paramsAPI) => {
 }
 */
 
+const dataAPI = {
+  bandName: '',
+  url_band_lastFM: '',
+  listeners_on_lastFM: '',
+  artist_similars: [],
+}
+
 const getDataAboutArtist = async (searchAPI: string) => {
   try{
-    interface dataAPI {
-      bandName: string,
-      url_band_lastFM: string,
-      listeners_on_lastFM: string,
-      artist_similars: string []
-    }
-    const dataAPI {
-     
-
-    }
+   
     const url_artist_last_fm = `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchAPI}&api_key=${API_KEY_LASTFM}&format=json`;
 
     const response = await fetch(url_artist_last_fm)
@@ -72,8 +70,15 @@ const getDataAboutArtist = async (searchAPI: string) => {
       throw new Error('Error in the request to Spotify API')
     }
 
-    console.log(await response.json())
-    //return await response.json()
+    const data = await response.json()
+    if(data["results"]["artistmatches"]["artist"].length !== 0) {//Hubo matches de artistas
+      dataAPI.bandName = data["results"]["artistmatches"]["artist"][0]["name"]
+      dataAPI.url_band_lastFM = data["results"]["artistmatches"]["artist"][0]["url"]
+      dataAPI.listeners_on_lastFM = data["results"]["artistmatches"]["artist"][0]["listeners"]
+    }else{
+      alert("No se encontraron coincidencias para su banda")
+    }
+    return dataAPI
   }catch(error){
     console.log("Error: " + error)
   }

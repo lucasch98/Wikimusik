@@ -52,7 +52,12 @@ function App() {
       {
         showModal && (
           <>
-            <CardData searchAPI={searchAPI} isLoading={isLoading} setLoading={setLoading}/>
+            <CardData 
+              searchAPI={searchAPI} 
+              isLoading={isLoading} 
+              setLoading={setLoading} 
+              showModal={showModal}
+            />
             <ModalDataInput showModal={setShowModal} bandData={searchAPI}/>
           </>
         )

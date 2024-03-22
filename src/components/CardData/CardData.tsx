@@ -5,15 +5,23 @@ interface props {
   searchAPI: string,
   isLoading: boolean,
   setLoading: React.Dispatch<React.SetStateAction<boolean>>
+  showModal: boolean
 }
 
-function CardData ({searchAPI, isLoading, setLoading} : props) {
+function CardData ({searchAPI, isLoading, setLoading, showModal} : props) {
   
-  useEffect(() => {
-    const responseAPI = getDataAboutArtist(searchAPI)
-    console.log("respuesta API: " + responseAPI)
-    console.log(isLoading, setLoading)
+   useEffect(() => {
+    fetchData()
   },[])
+
+  const fetchData = async () => {
+    if(showModal) {
+      const responseAPI = await getDataAboutArtist(searchAPI)
+      console.log("respuesta API: " + responseAPI)
+      console.log(isLoading, setLoading)
+    }
+  }
+
   return(
     <>
     </>

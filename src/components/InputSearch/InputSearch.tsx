@@ -3,18 +3,15 @@ import "./InputSearch.css"
 import { useState } from 'react'
 
 interface OpenModal {
-  openModal: () => void;
   setSearchAPI: (value: string) => void
 }
 
-function InputSearch({openModal, setSearchAPI}: OpenModal) {
+function InputSearch({setSearchAPI}: OpenModal) {
   const [search, setSearch] = useState("")
 
   const handleKeyDown = (event: { key: string; preventDefault: () => void; }) => {
     if(event.key === 'Enter') {
-      event.preventDefault()
       setSearchAPI(search)
-      openModal()
     }
   }
 
@@ -22,8 +19,10 @@ return(
   <>
     <div className='containerInputSearch'>
       <Input 
+        type='text'
         id='inputSearch' 
         placeholder='🔎 Type Band...' 
+        value={search}
         size='lg'
         onChange={(e) => setSearch(e.target.value)} 
         onKeyDown={handleKeyDown}

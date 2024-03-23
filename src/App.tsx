@@ -2,7 +2,7 @@ import "./App.css"
 import { Tabs, TabList, Tab} from '@chakra-ui/react'
 import InputSearch from "./components/InputSearch/InputSearch"
 import ModalDataInput from "./components/ModalDataInput/ModalDataInput"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { TopArtists } from "./components/TopArtists/TopArtists"
 import CardData from "./components/CardData/CardData"
 
@@ -11,12 +11,15 @@ function App() {
   const [searchAPI, setSearchAPI] = useState("")
   const [isLoading, setLoading] = useState(true)
 
-  const openModal = () => {
+  useEffect(() => {
     if(searchAPI !== "") {
-      console.log("ntre")
       setShowModal(true)
+      openModal()
     }
+  }, [searchAPI])
 
+  const openModal = () => {
+    setShowModal(true)
   }
 
   return (
@@ -48,7 +51,7 @@ function App() {
             as you listen
           </h1>
         </section>
-      <InputSearch openModal={openModal} setSearchAPI={setSearchAPI}/>
+      <InputSearch setSearchAPI={setSearchAPI}/>
       {
         showModal && (
           <>

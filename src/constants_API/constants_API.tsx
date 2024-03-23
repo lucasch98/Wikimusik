@@ -1,11 +1,12 @@
+import { Dispatch, SetStateAction } from "react"
+import { DataAPIProps } from "../components/CardData/CardData"
 
 /*export interface paramsAPI {
   //artist: string
   //country: string
   searchAPI: string
 }*/
-
-const API_KEY_LASTFM = '591cfdab34dc890c5bdd539660d20060'
+const API_KEY_LASTFM = '591cfdab34dc890c5bdd539660d20060'  
 
 const getTopTracksURL = async (searchAPI: string) => {
   try{
@@ -53,16 +54,10 @@ const getTopArtistsByCountry = async ({country}: paramsAPI) => {
 }
 */
 
-const dataAPI = {
-  bandName: '',
-  url_band_lastFM: '',
-  listeners_on_lastFM: '',
-  artist_similars: [],
-}
 
-const getDataAboutArtist = async (searchAPI: string) => {
+
+const getDataAboutArtist = async (searchAPI: string, setResponseAPI: Dispatch<SetStateAction<DataAPIProps>>) => {
   try{
-   
     const url_artist_last_fm = `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchAPI}&api_key=${API_KEY_LASTFM}&format=json`;
 
     const response = await fetch(url_artist_last_fm)
@@ -72,13 +67,16 @@ const getDataAboutArtist = async (searchAPI: string) => {
 
     const data = await response.json()
     if(data["results"]["artistmatches"]["artist"].length !== 0) {//Hubo matches de artistas
-      dataAPI.bandName = data["results"]["artistmatches"]["artist"][0]["name"]
-      dataAPI.url_band_lastFM = data["results"]["artistmatches"]["artist"][0]["url"]
-      dataAPI.listeners_on_lastFM = data["results"]["artistmatches"]["artist"][0]["listeners"]
+      const dataAPI: DataAPIProps = { 
+        bandName: data["results"]["artistmatches"]["artist"][0]["name"],
+        url_band_lastFM:  data["results"]["artistmatches"]["artist"][0]["url"],
+        listeners_on_lastFM: data["results"]["artistmatches"]["artist"][0]["listeners"],
+        artist_similars: []
+      }
+      setResponseAPI(dataAPI)
     }else{
       alert("No se encontraron coincidencias para su banda")
     }
-    return dataAPI
   }catch(error){
     console.log("Error: " + error)
   }

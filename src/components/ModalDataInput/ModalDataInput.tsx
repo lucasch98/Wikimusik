@@ -8,13 +8,13 @@ import {
   useDisclosure,
 } from '@chakra-ui/react'
 import { useEffect } from 'react';
+import { DataAPIProps } from '../CardData/CardData';
 
 interface closeModalProp {
   showModal: (value: boolean) => void
-  bandData: {}
 }
 
-function ModalDataInput({showModal, bandData}: closeModalProp) {
+function ModalDataInput(showModal: closeModalProp, bandData: DataAPIProps) {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   useEffect(() => {
@@ -44,6 +44,7 @@ function ModalDataInput({showModal, bandData}: closeModalProp) {
           <ModalBody style={{ marginTop: '3%'}}>
             <p style={{color: 'white'}}>Custom backdrop filters!</p>
           </ModalBody>
+          <p>{bandData}</p>
           {/*<ModalFooter>
             <Button onClick={closeModal} style={{backgroundColor: '#bee3f8'}}>Close</Button>
   </ModalFooter>*/}

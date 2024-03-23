@@ -26,6 +26,7 @@ return(
         size='lg'
         onChange={(e) => setSearch(e.target.value)} 
         onKeyDown={handleKeyDown}
+        autoComplete='off'
       />
     </div>
   </>

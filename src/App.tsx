@@ -4,12 +4,19 @@ import InputSearch from "./components/InputSearch/InputSearch"
 import ModalDataInput from "./components/ModalDataInput/ModalDataInput"
 import { useEffect, useState } from "react"
 import { TopArtists } from "./components/TopArtists/TopArtists"
-import CardData from "./components/CardData/CardData"
+import CardData, { DataAPIProps } from "./components/CardData/CardData"
 
 function App() {
   const [showModal, setShowModal] = useState(false)
   const [searchAPI, setSearchAPI] = useState("")
   const [isLoading, setLoading] = useState(true)
+  const [bandAPI, setBandAPI] = useState<DataAPIProps>({
+      bandName: "",
+      url_band_lastFM: "",
+      listeners_on_lastFM: "",
+      artist_similars: []
+    }
+  )
 
   useEffect(() => {
     if(searchAPI !== "") {
@@ -61,7 +68,7 @@ function App() {
               setLoading={setLoading} 
               showModal={showModal}
             />
-            <ModalDataInput showModal={setShowModal} bandData={searchAPI}/>
+            <ModalDataInput showModal={setShowModal} setBandAPI={setBandAPI}/>
           </>
         )
       }

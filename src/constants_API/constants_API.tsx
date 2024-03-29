@@ -1,4 +1,3 @@
-import { Dispatch, SetStateAction } from "react"
 import { DataAPIProps } from "../components/CardData/CardData"
 
 /*export interface paramsAPI {
@@ -6,11 +5,10 @@ import { DataAPIProps } from "../components/CardData/CardData"
   //country: string
   searchAPI: string
 }*/
-const API_KEY_LASTFM = '591cfdab34dc890c5bdd539660d20060'  
 
 const getTopTracksURL = async (searchAPI: string) => {
   try{
-    const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${searchAPI}&api_key=${API_KEY_LASTFM}&format=json`)
+    const response = await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettoptracks&artist=${searchAPI}&api_key=${import.meta.env.VITE_API_KEY_LASTFM}&format=json`)
 
       if(!response.ok) {
         throw new Error('No data')
@@ -53,12 +51,24 @@ const getTopArtistsByCountry = async ({country}: paramsAPI) => {
   }
 }
 */
+export interface propDataAPI {
+  bandName: string,
+  url_band_lastFM: string,
+  listeners_on_lastFM: string
+  artist_similars: [],
+}
 
+const dataAPI: DataAPIProps = {
+  bandName: '',
+  url_band_lastFM: '',
+  listeners_on_lastFM: '',
+  artist_similars: [],
+}
 
-
-const getDataAboutArtist = async (searchAPI: string, setResponseAPI: Dispatch<SetStateAction<DataAPIProps>>) => {
+const getDataAboutArtist = async (searchAPI: string) => {
   try{
-    const url_artist_last_fm = `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchAPI}&api_key=${API_KEY_LASTFM}&format=json`;
+    //console.log("as: ", process.env.API_KEY_LASTFM)
+    const url_artist_last_fm = `https://ws.audioscrobbler.com/2.0/?method=artist.search&artist=${searchAPI}&api_key=${import.meta.env.VITE_API_KEY_LASTFM}&format=json`;
 
     const response = await fetch(url_artist_last_fm)
     if(!response.ok) {
@@ -67,16 +77,15 @@ const getDataAboutArtist = async (searchAPI: string, setResponseAPI: Dispatch<Se
 
     const data = await response.json()
     if(data["results"]["artistmatches"]["artist"].length !== 0) {//Hubo matches de artistas
-      const dataAPI: DataAPIProps = { 
-        bandName: data["results"]["artistmatches"]["artist"][0]["name"],
-        url_band_lastFM:  data["results"]["artistmatches"]["artist"][0]["url"],
-        listeners_on_lastFM: data["results"]["artistmatches"]["artist"][0]["listeners"],
-        artist_similars: []
-      }
-      setResponseAPI(dataAPI)
+      dataAPI.bandName = data["results"]["artistmatches"]["artist"][0]["name"]
+      dataAPI.url_band_lastFM = data["results"]["artistmatches"]["artist"][0]["url"]
+      dataAPI.listeners_on_lastFM = data["results"]["artistmatches"]["artist"][0]["listeners"]
+      dataAPI.artist_similars = []
     }else{
       alert("No se encontraron coincidencias para su banda")
     }
+    console.log(dataAPI)
+    return dataAPI
   }catch(error){
     console.log("Error: " + error)
   }

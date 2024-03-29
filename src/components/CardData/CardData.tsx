@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react"
 import { getDataAboutArtist } from "../../constants_API/constants_API"
-import DataAPIProps from '../CardData/CardData';
- 
+
 interface props {
   searchAPI: string,
   isLoading: boolean,
@@ -17,26 +16,22 @@ export interface DataAPIProps {
   artist_similars: string[]
 }
 
-function CardData ({searchAPI, isLoading, setLoading, showModal, setBandAPI} : props) {
-  const [responseAPI, setResponseAPI] = useState<DataAPIProps>({
-    bandName: "",
-    url_band_lastFM: "",
-    listeners_on_lastFM: "",
-    artist_similars: []
-  })
+function CardData ({searchAPI, isLoading, setLoading, showModal} : props) {
+  
+  const [responseAPI, setResponseAPI] = useState<DataAPIProps>();
 
    useEffect(() => {
     fetchData()
-  }, [])
-
+  })
 
   const fetchData = async () => {
     if(showModal) {
-      await getDataAboutArtist(searchAPI, setResponseAPI)
-      if(responseAPI.bandName !== ""){
-        setBandAPI(responseAPI)
-        console.log(isLoading, setLoading, responseAPI)
-      }
+      console.log(import.meta.env.VITE_API_KEY_LASTFM)
+      const dataFromAPI = await getDataAboutArtist(searchAPI)
+      setResponseAPI(dataFromAPI)
+
+      console.log("respuesta API: " + responseAPI)
+      console.log(isLoading, setLoading)
     }
   }
 

@@ -4,26 +4,20 @@ import InputSearch from "./components/InputSearch/InputSearch"
 import ModalDataInput from "./components/ModalDataInput/ModalDataInput"
 import { useEffect, useState } from "react"
 import { TopArtists } from "./components/TopArtists/TopArtists"
-import CardData, { DataAPIProps } from "./components/CardData/CardData"
+//import CardData from "./components/CardData/CardData"
 
 function App() {
   const [showModal, setShowModal] = useState(false)
   const [searchAPI, setSearchAPI] = useState("")
-  const [isLoading, setLoading] = useState(true)
-  const [bandAPI, setBandAPI] = useState<DataAPIProps>({
-      bandName: "",
-      url_band_lastFM: "",
-      listeners_on_lastFM: "",
-      artist_similars: []
-    }
-  )
+  //const [isLoading, setLoading] = useState(true)
+  const [pressEnter, setPressEnter] = useState(false)
 
   useEffect(() => {
-    if(searchAPI !== "") {
+    if(searchAPI !== "" && pressEnter) {
       setShowModal(true)
       openModal()
     }
-  }, [searchAPI])
+  }, [pressEnter, searchAPI])
 
   const openModal = () => {
     setShowModal(true)
@@ -58,17 +52,22 @@ function App() {
             as you listen
           </h1>
         </section>
-      <InputSearch setSearchAPI={setSearchAPI}/>
+      <InputSearch setSearchAPI={setSearchAPI} setPressEnter={setPressEnter}/>
       {
         showModal && (
           <>
-            <CardData 
-              searchAPI={searchAPI} 
-              isLoading={isLoading} 
-              setLoading={setLoading} 
-              showModal={showModal}
+            {/*<CardData 
+                searchAPI={searchAPI}
+                isLoading={isLoading}
+                setLoading={setLoading}
+                showModal={showModal} 
+        />*/}
+            <ModalDataInput 
+              setShowModal={setShowModal} 
+              showModal={showModal} 
+              setPressEnter={setPressEnter}
+              searchAPI={searchAPI}
             />
-            <ModalDataInput showModal={setShowModal} setBandAPI={setBandAPI}/>
           </>
         )
       }

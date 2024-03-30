@@ -3,14 +3,16 @@ import "./InputSearch.css"
 import { useState } from 'react'
 
 interface OpenModal {
-  setSearchAPI: (value: string) => void
+  setSearchAPI: (value: string) => void;
+  setPressEnter: (value: boolean) => void;
 }
 
-function InputSearch({setSearchAPI}: OpenModal) {
+function InputSearch({setSearchAPI, setPressEnter}: OpenModal) {
   const [search, setSearch] = useState("")
 
-  const handleKeyDown = (event: { key: string; preventDefault: () => void; }) => {
+  const handleKeyDown = (event: { key: string}) => {
     if(event.key === 'Enter') {
+      setPressEnter(true)
       setSearchAPI(search)
     }
   }

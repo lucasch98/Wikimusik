@@ -1,10 +1,15 @@
-import { DataAPIProps } from "../components/CardData/CardData"
-
 /*export interface paramsAPI {
   //artist: string
   //country: string
   searchAPI: string
 }*/
+
+export interface propTopTracks {
+  name: string;
+  listeners: string;
+  playcount: string;
+  url: string;
+}
 
 const getTopTracksURL = async (searchAPI: string) => {
   try{
@@ -13,8 +18,22 @@ const getTopTracksURL = async (searchAPI: string) => {
       if(!response.ok) {
         throw new Error('No data')
       }
+
+      const dataAPI = await response.json()
+      const newTracks: propTopTracks[] = []; //Creo un array y me quedo con las ultimas pistas
+      if(dataAPI["toptracks"]["track"].length !== 0) {
+        for(let i=0; i<3; i++) {
+          newTracks.push({
+            name: dataAPI["toptracks"]["track"][i]["name"],
+            listeners: dataAPI["toptracks"]["track"][i]["listeners"],
+            playcount: dataAPI["toptracks"]["track"][i]["playcount"],
+            url: dataAPI["toptracks"]["track"][i]["url"],
+          })
+        }
+      }
       
-      return await response.json()
+      console.log("TopTracks: ", newTracks)
+      return newTracks
   }catch(error){
     console.log(error)
   }
@@ -51,11 +70,12 @@ const getTopArtistsByCountry = async ({country}: paramsAPI) => {
   }
 }
 */
-export interface propDataAPI {
-  bandName: string,
-  url_band_lastFM: string,
-  listeners_on_lastFM: string
-  artist_similars: [],
+
+export interface DataAPIProps {
+  bandName: "",
+  url_band_lastFM: "",
+  listeners_on_lastFM: "",
+  artist_similars: string[]
 }
 
 const dataAPI: DataAPIProps = {
@@ -91,12 +111,10 @@ const getDataAboutArtist = async (searchAPI: string) => {
   }
 }
 
-
-
 export {
   getTopTracksURL,
   //getTopArtistsByCountry,
   //getTopTracksByCountry,
-  getDataAboutArtist
+  getDataAboutArtist,
 }
 

@@ -19,6 +19,9 @@ import {
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { DataAPIProps, getDataAboutArtist, getTopTracksURL, propTopTracks } from "../../Services_API/Services_API"
 import { ExternalLinkIcon } from '@chakra-ui/icons';
+import "./styles.css"
+import { MdPeopleAlt } from "react-icons/md";
+import { AiFillSound } from "react-icons/ai";
 
 interface ModalDataInputProps {
   showModal: boolean;
@@ -79,12 +82,12 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
             <ModalContent 
               style={{backgroundColor: '#1A202C'}} 
               maxW="calc(90vw)"
-              width="calc(45vw)"
+              width="calc(50vw)"
               maxHeight="90vh"
               overflow="auto"
             >
             <ModalHeader style={{color: 'white', textAlign: 'center', fontSize: "30px"}}>
-             <span style={{color: "#BEE3F8"}}>{bandAPI.bandName}</span>
+             <span style={{color: "#BEE3F8"}}><strong>{bandAPI.bandName}</strong></span>
             </ModalHeader>
             <hr style={{borderWidth: '1px'}}/>
             <ModalCloseButton style={{color: "red"}}/>
@@ -105,38 +108,51 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
 
                 <li>
                   <Flex alignItems="center">
-                    
                     <a target='_blank' href={bandAPI.url_band_lastFM}>
                       {bandAPI.bandName} on <span style={{color: "red", marginLeft: "3px"}}><ExternalLinkIcon style={{cursor: "pointer", color: "red"}}/>LastFM</span>
                     </a>
                   </Flex>
                 </li>
 
-
-                <h2 style={{fontSize: "25px", textAlign: "left", marginTop: "5%", color: "#BEE3F8"}}>Top tracks</h2>
-                {getTopTracks && (
-                  <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))' style={{marginTop: "2%"}}>
-                    {getTopTracks.map((track, index) => (
-                      <Card key={index} bg="#262f3e" color="white" border="solid 2px #bfb6b4">
-                        <CardHeader>
-                          <Heading style={{fontSize: "18px"}}>{track.name}</Heading>
-                        </CardHeader>
-                        <CardBody>
-                          <Text style={{fontSize: "18px", color: "#c0bebd"}}>
-                            <p>Listeners: {track.listeners}</p>
-                            <p>Playcount: {track.playcount}</p>
-                          </Text>
-                        </CardBody>
-                        <CardFooter justifyContent="center">
-                          <Button as='a' href={track.url} target='_blank' rel='noopener noreferrer' style={{color: "white", backgroundColor: "red"}}>Listen on LastFM</Button>
-                        </CardFooter>
-                      </Card>
-                    ))}
-                  </SimpleGrid>
-                )}
+                <article>
+                  <div style={{borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px #10bcde", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%"}}>
+                    <h2 style={{fontSize: "25px", textAlign: "center", marginTop: "5%", color: "#BEE3F8"}}><strong>Top tracks</strong></h2>
+                    {getTopTracks && (
+                      <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))' style={{marginTop: "2%"}}>
+                        {getTopTracks.map((track, index) => (
+                          <Card key={index} bg="#262f3e" color="white" border="solid 2px #bfb6b4">
+                            <CardHeader textAlign="center">
+                              <Heading style={{fontSize: "18px"}}>{track.name}</Heading>
+                            </CardHeader>
+                            <CardBody>
+                              <Text style={{fontSize: "18px", color: "#c0bebd"}}>
+                                  <div style={{display: "flex", alignItems: "center"}}>
+                                    <MdPeopleAlt style={{color: "white", paddingRight: "3%"}}/> 
+                                    <p>Listeners: {track.listeners}</p>
+                                  </div>
+                                  <div style={{display: "flex", alignItems: "center"}}>
+                                    <AiFillSound style={{color: "white", paddingRight: "3%"}}/> 
+                                    <p>Playcount: {track.playcount}</p>
+                                  </div>
+                              </Text>
+                            </CardBody>
+                            <CardFooter justifyContent="center" boxShadow="md">
+                              <Button as='a' href={track.url} target='_blank' rel='noopener noreferrer' style={{color: "white", backgroundColor: "red"}}>Listen on LastFM</Button>
+                            </CardFooter>
+                          </Card>
+                        ))}
+                      </SimpleGrid>
+                    )}
+                  </div>
+                </article>
               </ul>
-            </ModalBody>
 
+              <article>
+                <div style={{borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px #339f40", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%"}}>
+                  <h2 style={{fontSize: "25px", textAlign: "center", marginTop: "5%", color: "#BEE3F8"}}><strong>Top albums</strong></h2>
+                </div>
+              </article>
+            </ModalBody>
             
             {/*<ModalFooter>
               <Button onClick={closeModal} style={{backgroundColor: '#bee3f8'}}>Close</Button>

@@ -17,11 +17,12 @@ import {
   Text 
 } from '@chakra-ui/react'
 import { Dispatch, SetStateAction, useEffect, useState } from 'react';
-import { DataAPIProps, getDataAboutArtist, getTopTracksURL, propTopTracks } from "../../Services_API/Services_API"
+import { DataAPIProps, getDataAboutArtist, getTopTracksURL, propTopTracks, getTopAlbums } from "../../Services_API/Services_API"
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import "./styles.css"
 import { MdPeopleAlt } from "react-icons/md";
 import { AiFillSound } from "react-icons/ai";
+import { CardsAlbums } from '../CardsAlbums/CardsAlbums';
 
 interface ModalDataInputProps {
   showModal: boolean;
@@ -40,6 +41,7 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
       onOpen()
       getDataAPIArtist()
       getTopTracksAPI()
+      getTopAlbumsAPI()
     }
   }, [onOpen, showModal])
 
@@ -47,6 +49,11 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
     setShowModal(false)
     onClose()
     setPressEnter(false)
+  }
+
+  const getTopAlbumsAPI = async () => {
+    const dataAlbumsAPI = getTopAlbums(searchAPI)
+    console.log(dataAlbumsAPI)
   }
 
   const getTopTracksAPI = async () => {
@@ -80,7 +87,7 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
             backdropBlur='5px'
           />
             <ModalContent 
-              style={{backgroundColor: '#1A202C'}} 
+              style={{backgroundColor: '#1A202C', scrollbarWidth: "thin", scrollbarColor: "#84BCE0 #1A202C"}}
               maxW="calc(90vw)"
               width="calc(50vw)"
               maxHeight="90vh"
@@ -93,7 +100,7 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
             <ModalCloseButton style={{color: "red"}}/>
             <ModalBody style={{ marginTop: '3%', fontSize: "20px"}}>
               {/*<p style={{color: 'white'}}>Custom backdrop filters!</p>*/}
-              <ul>
+              <ul style={{paddingLeft:"1%"}}>
                 <li>
                 <Flex alignItems="center">
                   {/*Icon LastFM */}
@@ -114,13 +121,13 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
                   </Flex>
                 </li>
 
-                <article>
-                  <div style={{borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px #10bcde", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%"}}>
-                    <h2 style={{fontSize: "25px", textAlign: "center", marginTop: "5%", color: "#BEE3F8"}}><strong>Top tracks</strong></h2>
+                <article style={{paddingTop: "5%"}}>
+                  <div style={{background: "linear-gradient(166deg, rgba(26,32,44,1) 4%, rgba(38,47,68,1) 69%)" ,borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px #10bcde", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%", paddingTop: "1%"}}>
+                    <h2 style={{fontSize: "25px", textAlign: "center", marginBottom: "5%", color: "#BEE3F8"}}><strong>Top tracks</strong></h2>
                     {getTopTracks && (
                       <SimpleGrid spacing={4} templateColumns='repeat(auto-fill, minmax(200px, 1fr))' style={{marginTop: "2%"}}>
                         {getTopTracks.map((track, index) => (
-                          <Card key={index} bg="#262f3e" color="white" border="solid 2px #bfb6b4">
+                          <Card key={index} bg="#2d3845" color="white" border="solid 2px #3091a4">
                             <CardHeader textAlign="center">
                               <Heading style={{fontSize: "18px"}}>{track.name}</Heading>
                             </CardHeader>
@@ -137,7 +144,7 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
                               </Text>
                             </CardBody>
                             <CardFooter justifyContent="center" boxShadow="md">
-                              <Button as='a' href={track.url} target='_blank' rel='noopener noreferrer' style={{color: "white", backgroundColor: "red"}}>Listen on LastFM</Button>
+                              <Button as='a' href={track.url} target='_blank' rel='noopener noreferrer' style={{color: "white", backgroundColor: "#d82929"}}>Listen on LastFM</Button>
                             </CardFooter>
                           </Card>
                         ))}
@@ -148,8 +155,9 @@ function ModalDataInput({ setShowModal, showModal, setPressEnter, searchAPI }: M
               </ul>
 
               <article>
-                <div style={{borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px #339f40", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%"}}>
+                <div style={{background: "radial-gradient(circle, rgba(26,32,44,1) 4%, rgba(38,47,68,1) 69%)" ,borderRadius: "10px", borderColor: "1px solid white", boxShadow: "0px 0px 10px white", paddingLeft: "2%", paddingRight: "2%", paddingBottom: "2%"}}>
                   <h2 style={{fontSize: "25px", textAlign: "center", marginTop: "5%", color: "#BEE3F8"}}><strong>Top albums</strong></h2>
+                  <CardsAlbums />
                 </div>
               </article>
             </ModalBody>

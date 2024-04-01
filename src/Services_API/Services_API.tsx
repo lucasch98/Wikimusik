@@ -39,6 +39,28 @@ const getTopTracksURL = async (searchAPI: string) => {
   }
 }
 
+export interface propAlbum {
+  name: string;
+  playcount: string;
+  url: string;
+  image: string;
+}
+
+const getTopAlbums = async (searchAPI: string) => {
+  console.log("aa")
+  let result: propAlbum
+  await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${searchAPI}&api_key=${import.meta.env.VITE_API_KEY_LASTFM}&format=json`)
+  .then(response => response.json())
+  .then(data => {
+    result.name = data["topalbums"]["album"][0]["name"]
+    result.playcount = data["topalbums"]["album"][0]["playcount"]
+    result.image = data["topalbums"]["album"][0]["image"][3]
+    result.url = data["topalbums"]["album"][0]["url"]
+    console.log("name: ", data["topalbums"]["album"][0]["image"][3])
+  })
+}
+
+
 /*
 const getTopTracksByCountry = async ({country}: paramsAPI) => {
   try{
@@ -116,5 +138,6 @@ export {
   //getTopArtistsByCountry,
   //getTopTracksByCountry,
   getDataAboutArtist,
+  getTopAlbums
 }
 

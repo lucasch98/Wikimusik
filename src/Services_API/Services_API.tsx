@@ -47,17 +47,22 @@ export interface propAlbum {
 }
 
 const getTopAlbums = async (searchAPI: string) => {
-  console.log("aa")
-  let result: propAlbum
   await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${searchAPI}&api_key=${import.meta.env.VITE_API_KEY_LASTFM}&format=json`)
   .then(response => response.json())
   .then(data => {
-    result.name = data["topalbums"]["album"][0]["name"]
-    result.playcount = data["topalbums"]["album"][0]["playcount"]
-    result.image = data["topalbums"]["album"][0]["image"][3]
-    result.url = data["topalbums"]["album"][0]["url"]
-    console.log("name: ", data["topalbums"]["album"][0]["image"][3])
-  })
+    const albumAPI: propAlbum[] = [];
+    if(data["topalbums"]["album"].length !== 0){
+      for(let i=0; i<3;i++){
+        albumAPI.name = data["topalbums"]["album"][0]["name"]
+        albumAPI.playcount = data["topalbums"]["album"][0]["playcount"]
+        albumAPI.image = data["topalbums"]["album"][0]["image"][3]
+        albumAPI.url = data["topalbums"]["album"][0]["url"]
+      }
+    }
+  }
+  )
+
+  return albumAPI
 }
 
 

@@ -22,7 +22,7 @@ const getTopTracksURL = async (searchAPI: string) => {
       const dataAPI = await response.json()
       const newTracks: propTopTracks[] = []; //Creo un array y me quedo con las ultimas pistas
       if(dataAPI["toptracks"]["track"].length !== 0) {
-        for(let i=0; i<3; i++) {
+        for(let i=0; i<5; i++) {
           newTracks.push({
             name: dataAPI["toptracks"]["track"][i]["name"],
             listeners: dataAPI["toptracks"]["track"][i]["listeners"],
@@ -47,21 +47,22 @@ export interface propAlbum {
 }
 
 const getTopAlbums = async (searchAPI: string) => {
+  const albumAPI: propAlbum[] = [];
   await fetch(`https://ws.audioscrobbler.com/2.0/?method=artist.gettopalbums&artist=${searchAPI}&api_key=${import.meta.env.VITE_API_KEY_LASTFM}&format=json`)
   .then(response => response.json())
   .then(data => {
-    const albumAPI: propAlbum[] = [];
     if(data["topalbums"]["album"].length !== 0){
       for(let i=0; i<3;i++){
-        albumAPI.name = data["topalbums"]["album"][0]["name"]
-        albumAPI.playcount = data["topalbums"]["album"][0]["playcount"]
-        albumAPI.image = data["topalbums"]["album"][0]["image"][3]
-        albumAPI.url = data["topalbums"]["album"][0]["url"]
+        albumAPI.push({
+          name: data["topalbums"]["album"][i]["name"],
+          playcount: data["topalbums"]["album"][i]["playcount"],
+          image: data["topalbums"]["album"][i]["image"][3]["#text"],
+          url: data["topalbums"]["album"][i]["url"]
+        })
       }
     }
   }
   )
-
   return albumAPI
 }
 

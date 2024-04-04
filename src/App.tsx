@@ -6,11 +6,17 @@ import { useEffect, useState } from "react"
 import { TopArtists } from "./components/TopArtists/TopArtists"
 //import CardData from "./components/CardData/CardData"
 
+export interface propSearch {
+  searchAPI: string
+}
+
 function App() {
   const [showModal, setShowModal] = useState(false)
   const [searchAPI, setSearchAPI] = useState("")
   //const [isLoading, setLoading] = useState(true)
   const [pressEnter, setPressEnter] = useState(false)
+
+
 
   useEffect(() => {
     if(searchAPI !== "" && pressEnter) {
